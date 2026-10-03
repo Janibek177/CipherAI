@@ -80,8 +80,8 @@ When analyzing images, identify UI elements, layout, bugs, OCR text and diagram 
 Always be helpful and accurate.`;
 
     const models = [
-      "gemini-2.5-flash",
-      "gemini-2.5-flash-lite",
+    "gemini-3.5-flash-lite",
+    "gemini-3.5-flash",
     ];
 
     let lastError: any = null;
