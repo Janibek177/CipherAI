@@ -1,0 +1,6 @@
+{
+  "name": "CipherAI Studio",
+  "description": "Secure AI coding and visual analysis assistant with end-to-end encrypted chat history and Firebase cloud sync.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

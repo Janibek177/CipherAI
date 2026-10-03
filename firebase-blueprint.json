@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document storing basic account metadata",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique Firebase Auth user ID"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Account creation timestamp"
+        }
+      },
+      "required": ["userId", "email", "createdAt"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "A conversation thread belonging to a user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique chat session identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID"
+        },
+        "title": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Title or summary of conversation"
+        },
+        "isEncrypted": {
+          "type": "boolean",
+          "description": "Whether messages in this session are client-side encrypted"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["id", "userId", "title", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "An individual message within a chat session",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique message ID"
+        },
+        "chatId": {
+          "type": "string",
+          "description": "Parent chat session ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Author user ID"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "model"],
+          "description": "Role of the sender"
+        },
+        "content": {
+          "type": "string",
+          "description": "The message body or AES-256 encrypted payload"
+        },
+        "isEncrypted": {
+          "type": "boolean",
+          "description": "Whether content is encrypted"
+        },
+        "hasImage": {
+          "type": "boolean",
+          "description": "Whether message included an image"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Message creation timestamp"
+        }
+      },
+      "required": ["id", "chatId", "userId", "role", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "Stores user profile data"
+    },
+    "/users/{userId}/chats/{chatId}": {
+      "schema": {
+        "$ref": "#/entities/ChatSession"
+      },
+      "description": "Stores user chat sessions"
+    },
+    "/users/{userId}/chats/{chatId}/messages/{messageId}": {
+      "schema": {
+        "$ref": "#/entities/ChatMessage"
+      },
+      "description": "Stores messages for a chat session"
+    }
+  }
+}
